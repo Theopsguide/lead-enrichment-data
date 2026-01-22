@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Enriched Lead",
+  "description": "Schema for validated lead enrichment results",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Row identifier from source spreadsheet (e.g., 'row-123')",
+      "pattern": "^row-[0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name of the lead",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "company": {
+      "type": ["string", "null"],
+      "description": "Company name",
+      "maxLength": 200
+    },
+    "email": {
+      "type": ["string", "null"],
+      "description": "Primary email address found",
+      "format": "email",
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    },
+    "email_secondary": {
+      "type": ["string", "null"],
+      "description": "Secondary email address if found",
+      "format": "email",
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    },
+    "email_source": {
+      "type": ["string", "null"],
+      "description": "How the email was discovered",
+      "enum": ["web_search", "company_website", "inferred", null]
+    },
+    "confidence": {
+      "type": ["string", "null"],
+      "description": "Confidence level of the email accuracy",
+      "enum": ["high", "medium", "low", null]
+    },
+    "company_domain": {
+      "type": ["string", "null"],
+      "description": "Company domain if discovered",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9.-]*\\.[a-zA-Z]{2,}$"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Brief note about how email was found or why not found",
+      "maxLength": 200
+    }
+  },
+  "required": ["id", "name"],
+  "additionalProperties": false
+}
